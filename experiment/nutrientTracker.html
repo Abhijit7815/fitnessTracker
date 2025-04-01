@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nutrient Tracking</title>
+</head>
+<body>
+    <h1>Nutrient Tracking</h1>
+    <form action="/submit_nutrient_data/" method="post">
+        {% csrf_token %}
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" required><br><br>
+
+        <label for="meal_type">Meal Type:</label>
+        <select id="meal_type" name="meal_type" required>
+            <option value="Breakfast">Breakfast</option>
+            <option value="Lunch">Lunch</option>
+            <option value="Dinner">Dinner</option>
+            <option value="Snack">Snack</option>
+        </select><br><br>
+
+        <label for="food_item">Food Item:</label>
+        <input type="text" id="food_item" name="food_item" required><br><br>
+
+        <label for="quantity">Quantity:</label>
+        <input type="text" id="quantity" name="quantity" required><br><br>
+
+        <label for="calories">Calories:</label>
+        <input type="number" id="calories" name="calories" required><br><br>
+
+        <label for="carbohydrates">Carbohydrates (g):</label>
+        <input type="number" id="carbohydrates" name="carbohydrates" required><br><br>
+
+        <label for="proteins">Proteins (g):</label>
+        <input type="number" id="proteins" name="proteins" required><br><br>
+
+        <label for="fats">Fats (g):</label>
+        <input type="number" id="fats" name="fats" required><br><br>
+
+        <label for="micronutrients">Micronutrients:</label><br>
+        <textarea id="micronutrients" name="micronutrients"></textarea><br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

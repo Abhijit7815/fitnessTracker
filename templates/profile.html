@@ -1,0 +1,97 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e9ecef;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .profile-container {
+            width: 470px;
+            height: 530px;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .profile-container img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            border: 4px solid #007bff;
+        }
+        .profile-container h2 {
+            margin: 10px 0;
+            font-size: 25px;
+            color: #343a40;
+            font-weight: bold;
+        }
+        .profile-container p {
+            margin: 8px 0;
+            font-size: 20px;
+            color: #495057;
+            line-height: 1.5;
+        }
+        .profile-container p strong {
+            color: #007bff;
+        }
+        .edit-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 25px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .edit-button:hover {
+            background-color: #0056b3;
+            box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+        }
+        .details {
+            text-align: left;
+            margin-top: 20px;
+        }
+        .details p {
+            margin: 30px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        {% if user %}
+            {% if user.profile_photo %}
+                <img src="{{ user.profile_photo.url }}" alt="Profile Photo">
+            {% else %}
+                <img src="{% static 'images/profile_logo.png' %}" alt="Default Profile Photo">
+            {% endif %}
+            <h2>{{ user.first_name }} {{ user.last_name }}</h2>
+            <div class="details">
+                <p><strong>Email :</strong> {{ user.email }}</p>
+                <p><strong>Height :</strong> {% if user.height %}{{ user.height }} cm{% else %}Not Found{% endif %}</p>
+                <p><strong>Weight :</strong> {% if user.weight %}{{ user.weight }} kg{% else %}Not Found{% endif %}</p>
+                <p><strong>Age :</strong> {% if user.age %}{{ user.age }}{% else %}Not Found{% endif %}</p>
+            </div>
+            <a href="{% url 'edit_profile' %}" class="edit-button">Edit Profile</a>
+        {% else %}
+            <h2>User Not Found</h2>
+        {% endif %}
+    </div>
+</body>
+</html>

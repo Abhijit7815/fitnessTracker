@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 25px 10px;
+            padding: 0;
+        }
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.4); /* 40% black */
+            overflow: hidden;
+            height: 70px;
+            width: 100%;
+            border-radius: 7px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .navbar-links-inner, .logout-link {
+            height: 40px;
+            width: 90px;
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+        .navbar-links-inner:hover, .logout-link:hover {
+            background-color: tomato;
+        }
+        .navbar-links-outer {
+            width: 500px;
+            display: flex;
+            justify-content: space-around;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        .profile-logo, .welcome-message {
+            display: flex;
+            align-items: center;
+        }
+        .profile-logo{
+            margin-left: 10px;
+        }
+        .navbar .profile-logo a {
+            text-decoration: none;
+        }
+        .profile-logo a img {
+            width: 20px;
+            border-radius: 50%;
+        }
+        .content {
+            text-align: center;
+            padding: 20px;
+        }
+        .welcome-message-container {
+            margin-bottom: 20px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 7px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .quote-container {
+            margin-bottom: 20px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 7px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .stats-container, .goals-container, .activities-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 7px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+            text-align: center;
+        }
+        .footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="profile-logo">
+            <a href="#"><img src="{{ user.profile_photo.url|default:'default_profile.png' }}" alt="Profile Logo"></a>
+            <div class="welcome-message">
+                <h2>Hi, {{ user.first_name }}</h2>
+            </div>
+        </div>
+        <div class="navbar-links-outer">
+            <a class="navbar-links-inner" href="#">Home</a>
+            <a class="navbar-links-inner" href="#">Workout</a>
+            <a class="navbar-links-inner" href="#">Progress</a>
+        </div>
+        <a class="logout-link" href="{% url 'logout' %}">Logout</a>
+    </div>
+
+    <div class="content">
+        <!-- Single Fitness Image -->
+        <div class="fit-image">
+            <img src="{% static 'images/fitness_img.jpg' %}">
+        </div>
+        <!-- Welcome Message -->
+        <div class="welcome-message-container">
+            <h2>Welcome Back, {{ user.first_name }}!</h2>
+            <p>We're glad to see you again. Let's achieve your fitness goals together!</p>
+        </div>
+
+        <!-- Daily Motivational Quote -->
+        <div class="quote-container">
+            <h3>Daily Motivation</h3>
+            <p>"The only bad workout is the one that didn't happen." - Unknown</p>
+        </div>
+
+        <!-- User Statistics -->
+        <div class="stats-container">
+            <h3>Your Statistics</h3>
+            <p>Workouts Completed: {{ user.workouts_completed }}</p>
+            <p>Calories Burned: {{ user.calories_burned }}</p>
+        </div>
+
+        <!-- BMI and Fitness Info -->
+        <div class="bmi-container">
+            <h2>Your BMI</h2>
+            <p>BMI Value: {{ bmi }}</p>
+            <p>{{ bmi_message }}</p>
+        </div>
+
+        <!-- User's Fitness Goals -->
+        <div class="goals-container">
+            <h3>Your Goals</h3>
+            <ul>
+                <li>Lose 5 kg by the end of the month</li>
+                <li>Run 10 km in one go</li>
+                <li>Attend 3 yoga sessions per week</li>
+            </ul>
+        </div>
+
+        <!-- Recent Activities -->
+        <div class="activities-container">
+            <h3>Recent Activities</h3>
+            <ul>
+                <li>Completed a 5 km run</li>
+                <li>Joined a new fitness class</li>
+                <li>Logged in 3 workouts this week</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer">
+        &copy; 2024 Your Fitness App. All rights reserved.
+    </div>
+</body>
+</html>

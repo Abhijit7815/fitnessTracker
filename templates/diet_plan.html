@@ -1,0 +1,255 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diet Plan</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 25px 10px;
+            padding: 0;
+            background-image: url('{% static "images/fitness_img.jpg" %}');
+            background-size: cover; /* Make the background image cover the entire element */
+            background-position: center; /* Center the background image */
+            background-repeat: no-repeat;
+        }
+        a{
+            text-decoration: none;
+            color: #fff;
+        }
+        
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.4); /* 40% black */
+            overflow: hidden;
+            height: 70px;
+            width: 100%;
+            border-radius: 7px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .navbar-links-outer {
+            width: 600px;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .curr,.navbar-home,.navbar-workout,.navbar-diet,.navbar-calorie,.navbar-fat,.navbar-sleep,.navbar-nutrient,.logout-link{
+            height: 40px;
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+        .navbar-home:hover,.navbar-workout:hover,.navbar-diet:hover,.navbar-calorie:hover,.navbar-fat:hover,.navbar-sleep:hover,.navbar-nutrient:hover, .logout-link:hover {
+            background-color: tomato;
+        }
+        .logout-link{
+            margin-right: 20px;
+            width: 70px;
+        }
+        .navbar-home{
+            width: 90px;
+        }
+        .navbar-workout{
+            width: 90px;
+        }
+        .navbar-diet{
+            width: 90px;
+        }
+        .navbar-calorie{
+            width: 160px;
+        }
+        .navbar-fat{
+            width: 117px;
+        }
+        .navbar-sleep{
+            width: 140px;
+        }
+        .navbar-nutrient{
+            width: 150px;
+        }
+
+        .curr{
+            background-color: tomato;
+        }
+
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        .profile-logo, .welcome-message {
+            display: flex;
+            align-items: center;
+            margin-left: 10px;
+        }
+        .profile-logo {
+            height: 50px;
+            width: 50px;
+        }
+        .navbar .profile-logo a {
+            text-decoration: none;
+        }
+        .profile-logo a img {
+            height: 50px;
+            width: 50px;
+            border-radius: 50%;
+        }
+        .container {
+            display: flex;
+            height: 70vh;
+            margin: 10px auto;
+            width: 70%;
+            background: transparent;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            justify-content: space-evenly;
+        }
+        #form-container, #result-container {
+            padding: 20px;
+            width: 40%;
+            height: 85%;
+            margin-top: 10px;
+            border: 1px solid black;
+            border-radius: 7px;
+            background: rgba(255, 255, 255, 0.1); /* White with low opacity */
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            backdrop-filter: blur(10px);
+            color: white;
+        }
+        #result-container {
+            padding-left: 30px;
+        }
+        input,select{
+            height: 28px;
+            margin-top: 2px;
+            padding: 5px;
+            font-size: 15px;
+            border-radius: 7px;
+            outline: none;
+            border: 1px solid white;
+            color: white;
+            background-color: transparent;
+        }
+        select{
+            height: 40px;
+        }
+        select option{
+            height: 40px;
+            font-size: 20px;
+        }
+        p{
+            font-size: 15px;
+            /* color: white; */
+        }
+        h1,h2 {
+            color: white;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        input[type="submit"] {
+            height: 40px;
+            width: 80px;
+            margin-top: 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .footer {
+            height: 50px;
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="profile-logo">
+            {% if user.profile_photo %}
+            <a href="{% url 'profile' %}"><img src="{{ user.profile_photo.url }}"></a>
+            {% else %}
+            <a href="{% url 'profile' %}"><img src="{% static 'images/profile_logo.png' %}"></a>
+            {% endif %}
+            <div class="welcome-message">
+                <!-- <h2>Hi, {{ user.first_name }}</h2> -->
+            </div>
+        </div>
+        <div class="navbar-links-outer">
+            <a class="navbar-home" href="{% url 'dashboard' %}">Home</a>
+            <a class="navbar-workout" href="{% url 'workout_view' %}">Workouts</a>
+            <a class="navbar-diet curr" href="#">Diet Plan</a>
+            <a class="navbar-calorie" href="{% url 'calculate_calories' %}">Calorie Calculator</a>
+            <a class="navbar-fat" href="{% url 'calculate_bodyfat' %}">Body Fat</a>
+            <!-- <a class="navbar-sleep" href="#">Sleep Tracking</a> -->
+            <!-- <a class="navbar-nutrient" href="#">Nutrient Tracker</a> -->
+        </div>
+        <a class="logout-link" href="{% url 'logout_view' %}">Logout</a>
+    </div>
+
+    <div class="container">
+            <div id="form-container">
+                <h1>Diet Plan</h1>
+                <form id="diet-form" method="post" action="/diet-plan/">
+                    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                    <input type="number" id="age" name="age" placeholder="Age" required><br><br>
+                    <input type="number" id="weight" name="weight" placeholder="Weight(kg)" required><br><br>
+                    <input type="number" id="height" name="height" placeholder="Height(cm)" required><br><br>
+                    <select id="gender" name="gender" required>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                    <select id="activity_level" name="activity_level" required>
+                        <option value="sedentary">Sedentary</option>
+                        <option value="light">Lightly active</option>
+                        <option value="moderate">Moderately active</option>
+                        <option value="active">Active</option>
+                        <option value="very_active">Very active</option>
+                    </select>
+                    <input type="submit" value="Submit">
+                </form>
+            </div>
+            <div id="result-container">
+                <h1>Diet Plan</h1>
+                {% if result %}
+                    <p>{{ result|linebreaks }}</p><br>
+                    {% for meal,nutrients in meal_plan.items %}
+                        <p>
+                            {{ meal.capitalize }} :
+                            {% for x,y in nutrients.items %}
+                                {{ x }}={{ y }},
+                            {% endfor %}
+                        </p>
+                    {% endfor %}
+
+    
+                {% else %}
+    
+                <p>First put your values</p>
+    
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="footer">
+            &copy; 2024 Fitness App. All rights reserved.
+            <p><a href="{% url 'contact_us' %}">Contact Us</a></p>
+        </div>
+</body>
+</html>

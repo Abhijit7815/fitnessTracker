@@ -1,0 +1,45 @@
+def diet_plan_view(request):
+    result = None
+
+    user_id = request.session.get('user_id')
+    user = Person.objects.get(id=user_id)
+    
+    if request.method == 'POST':
+        age = int(request.POST.get('age'))
+        weight = int(request.POST.get('weight'))
+        height = int(request.POST.get('height'))
+        gender = request.POST.get('gender')
+        activity_level = request.POST.get('activity_level')
+
+        
+        # Calculate BMR using Mifflin-St Jeor Equation
+        if gender == 'male':
+            bmr = 10 * weight + 6.25 * height - 5 * age + 5
+        else:
+            bmr = 10 * weight + 6.25 * height - 5 * age - 161
+        
+        # Calculate TDEE based on activity level
+        if activity_level == 'sedentary':
+            tdee = bmr * 1.2
+        elif activity_level == 'light':
+            tdee = bmr * 1.375
+        elif activity_level == 'moderate':
+            tdee = bmr * 1.55
+        elif activity_level == 'active':
+            tdee = bmr * 1.725
+        elif activity_level == 'very_active':
+            tdee = bmr * 1.9
+        else:
+            tdee = bmr
+        
+        result = f"Your BMR is {bmr:.2f} calories/day.\nYour TDEE based on your activity level is {tdee:.2f} calories/day."
+    
+    context1={
+        'user':user
+        }
+
+    context2 = {
+        'result': result,
+    }
+    context={**context1,**context2}
+    return render(request, 'diet_plan.html', context)

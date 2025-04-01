@@ -1,0 +1,195 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workouts</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 25px 10px;
+            padding: 0;
+            /* background-image: url('{% static "images/fitness_img.jpg" %}');
+            background-size: cover;  Make the background image cover the entire element
+            background-position: center;  Center the background image
+            background-repeat: no-repeat; */
+        }
+        h2{
+            color: white;
+        }
+        p{
+            font-size: 20px;
+        }
+        a{
+            text-decoration: none;
+            color: #fff;
+        }
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.4); /* 40% black */
+            overflow: hidden;
+            height: 70px;
+            width: 100%;
+            border-radius: 7px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .navbar-links-outer {
+            width: 600px;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .curr,.navbar-home,.navbar-workout,.navbar-diet,.navbar-calorie,.navbar-fat,.navbar-sleep,.navbar-nutrient,.logout-link{
+            height: 40px;
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+        .navbar-home:hover,.navbar-workout:hover,.navbar-diet:hover,.navbar-calorie:hover,.navbar-fat:hover,.navbar-sleep:hover,.navbar-nutrient:hover, .logout-link:hover {
+            background-color: tomato;
+        }
+        .logout-link{
+            margin-right: 20px;
+            width: 70px;
+        }
+        .navbar-home{
+            width: 90px;
+        }
+        .navbar-workout{
+            width: 90px;
+        }
+        .navbar-diet{
+            width: 90px;
+        }
+        .navbar-calorie{
+            width: 160px;
+        }
+        .navbar-fat{
+            width: 90px;
+        }
+        .navbar-sleep{
+            width: 140px;
+        }
+        .navbar-nutrient{
+            width: 150px;
+        }
+        .curr{
+            background-color: tomato;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        .profile-logo, .welcome-message {
+            display: flex;
+            align-items: center;
+            margin-left: 10px;
+        }
+        .profile-logo {
+            height: 50px;
+            width: 50px;
+        }
+        .navbar .profile-logo a {
+            text-decoration: none;
+        }
+        .profile-logo a img {
+            height: 50px;
+            width: 50px;
+            border-radius: 50%;
+        }
+        .content {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        /* .workout-block{
+            height: 190px;
+            width: calc(33.33% - 10px);
+            padding: 15px;
+            margin: 15px;
+            background-image: url("{{ exercise.image.url }}");
+            background-size: cover; 
+            background-position: center;
+            background-repeat: no-repeat;
+            border: 1px solid black;
+            border-radius: 10px;
+            text-decoration: none;
+            color: black;
+            
+        } */
+        
+        .footer {
+            height: 50px;
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="profile-logo">
+            {% if user.profile_photo %}
+            <a href="{% url 'profile' %}"><img src="{{ user.profile_photo.url }}"></a>
+            {% else %}
+            <a href="{% url 'profile' %}"><img src="{% static 'images/profile_logo.png' %}"></a>
+            {% endif %}
+            <div class="welcome-message">
+                <!-- <h2>Hi, {{ user.first_name }}</h2> -->
+            </div>
+        </div>
+        <div class="navbar-links-outer">
+            <a class="navbar-home" href="{% url 'dashboard' %}">Home</a>
+            <a class="navbar-workout curr" href="#">Workouts</a>
+            <a class="navbar-diet" href="{% url 'calculate_diet_plan' %}">Diet Plan</a>
+            <a class="navbar-calorie" href="{% url 'calculate_calories' %}">Calorie Calculator</a>
+            <a class="navbar-fat" href="{% url 'calculate_bodyfat' %}">Body Fat</a>
+            <!-- <a class="navbar-sleep" href="#">Sleep Tracking</a> -->
+            <!-- <a class="navbar-nutrient" href="#">Nutrient Tracker</a> -->
+        </div>
+        <a class="logout-link" href="{% url 'logout_view' %}">Logout</a>
+    </div>
+
+    <div class="content">
+
+        {% for exercise in exercises %}
+        
+            <a class="workout-block" href="{% url 'workout_detail' workout_id=exercise.id %}" style="
+            height: 220px;
+            width: calc(25% - 10px);
+            padding-top: 105px;
+            padding-left: 15px;
+            margin: 4px;
+            background-image: url('{{ exercise.image.url }}');
+            background-size: cover; 
+            background-position: center;
+            background-repeat: no-repeat;
+            border: 1px solid black;
+            border-radius: 10px;
+            text-decoration: none;
+            color: rgb(0, 0, 0);
+            box-sizing: border-box;">
+                <h3>Workout : {{ exercise.name }}</h3>
+                <p>Type : {{ exercise.workout_type }}</p>
+            </a>
+
+        {% endfor %}
+
+    </div>
+
+    <div class="footer">
+        &copy; 2024 Fitness App. All rights reserved.
+        <p><a href="{% url 'contact_us' %}">Contact Us</a></p>
+    </div>
+</body>
+</html>

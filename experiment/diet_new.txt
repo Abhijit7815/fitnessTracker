@@ -1,0 +1,83 @@
+def diet_plan_view(request):
+    result = None
+    meal_plan = {}
+
+    user_id = request.session.get('user_id')
+    user = Person.objects.get(id=user_id)
+
+    if request.method == 'POST':
+        age = int(request.POST.get('age'))
+        weight = int(request.POST.get('weight'))
+        height = int(request.POST.get('height'))
+        gender = request.POST.get('gender')
+        activity_level = request.POST.get('activity_level')
+
+        # Calculate BMR using Mifflin-St Jeor Equation
+        if gender == 'male':
+            bmr = 10 * weight + 6.25 * height - 5 * age + 5
+        else:
+            bmr = 10 * weight + 6.25 * height - 5 * age - 161
+
+        # Calculate TDEE based on activity level
+        if activity_level == 'sedentary':
+            tdee = bmr * 1.2
+        elif activity_level == 'light':
+            tdee = bmr * 1.375
+        elif activity_level == 'moderate':
+            tdee = bmr * 1.55
+        elif activity_level == 'active':
+            tdee = bmr * 1.725
+        elif activity_level == 'very_active':
+            tdee = bmr * 1.9
+        else:
+            tdee = bmr
+
+        # Macronutrient needs
+        protein_per_kg = 1.8  # grams of protein per kg of body weight
+        total_protein = protein_per_kg * weight  # in grams
+        calories_from_protein = total_protein * 4  # 1 gram of protein = 4 kcal
+
+        fat_percentage = 0.30  # 30% of total calories from fat
+        calories_from_fat = tdee * fat_percentage
+        total_fat = calories_from_fat / 9  # 1 gram of fat = 9 kcal
+
+        calories_from_carbs = tdee - (calories_from_protein + calories_from_fat)
+        total_carbs = calories_from_carbs / 4  # 1 gram of carbs = 4 kcal
+
+        # Meal distribution (assuming 4 meals: breakfast, lunch, snack, dinner)
+        meal_distribution = {
+            'breakfast': 0.25,
+            'lunch': 0.30,
+            'snack': 0.15,
+            'dinner': 0.30
+        }
+
+        for meal, fraction in meal_distribution.items():
+            meal_calories = tdee * fraction
+            meal_protein = total_protein * fraction
+            meal_fat = total_fat * fraction
+            meal_carbs = total_carbs * fraction
+
+            meal_plan[meal] = {
+                'calories': round(meal_calories, 2),
+                'protein': round(meal_protein, 2),
+                'carbs': round(meal_carbs, 2),
+                'fat': round(meal_fat, 2)
+            }
+
+        result = f"Your BMR is {bmr:.2f} calories/day.\nYour TDEE based on your activity level is {tdee:.2f} calories/day."
+
+        context1 = {
+            'user': user,
+            'result': result,
+            'meal_plan': meal_plan
+        }
+
+        context2={'user':user}
+        context={**context1,**context2}
+
+        return render(request, 'diet_plan.html', context)
+    
+    context={'user':user}
+
+    return render(request, 'diet_plan.html', context)

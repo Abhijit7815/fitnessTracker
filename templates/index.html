@@ -1,0 +1,96 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Tracker</title>
+    <style>
+        body {
+            background-image: url('{% static "images/index_bg.jpg" %}');
+            background-size: cover;
+            background-position: center;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        h1{
+            font-size: 45px;
+        }
+        a{
+            text-decoration: none;
+            color: #fff;
+        }
+        .header {
+            height: 70px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px;
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+            border-radius: 7px;
+        }
+        .header h1 {
+            margin-left: 10px;
+            color: #fff; /* White color for the text */
+        }
+        .nav{
+            margin-right: 10px;
+        }
+        .header .nav a {
+            height: 60px;
+            text-decoration: none;
+            color: #fff; /* White color for the link text */
+            background-color: #007bff; /* Bootstrap primary color */
+            padding: 10px 20px;
+            border-radius: 12px;
+            transition: background-color 0.3s ease; /* Smooth background color change on hover */
+        }
+        .header .nav a:hover {
+            background-color: #0056b3; /* Darker shade on hover */
+        }
+        .log{
+            width: 70px;
+            margin-right: 4px;
+        }
+        .reg{
+            width: 90px;
+            margin-left: 4px;
+        }
+        .quote {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 32px; /* Larger font size for the quote */
+            color: rgb(0, 0, 0);
+            width: 80%; /* Set a max-width for the quote container */
+        }
+        .footer {
+            height: 50px;
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Fitness Tracker</h1>
+        <div class="nav">
+            <a class="log" href="/login_view">Log In</a> | 
+            <a class="reg" href="/register">Register</a>
+        </div>
+    </div>
+    <div class="quote">
+        <p>"The greatest wealth is health. Take care of your body and it will take care of you."</p>
+    </div>
+    <div class="footer">
+        &copy; 2024 Fitness App. All rights reserved.
+        <p><a href="{% url 'contact_us' %}">Contact Us</a></p>
+    </div>
+</body>
+</html>

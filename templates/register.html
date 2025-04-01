@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Fitness Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        h2{
+            font-size: 35px;
+            margin-top: 10px;
+        }
+        .register-container {
+            height: 470px;
+            width: 360px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .form-input {
+            margin-bottom: 15px;
+        }
+        .form-input input {
+            height: 30px;
+            width: 90%;
+            font-size: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        .register-button {
+            background-color: #28a745; /* Bootstrap success color */
+            color: #fff; /* White color for the text */
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            height:40px;
+            width: 95%;
+            cursor: pointer;
+        }
+        .register-button:hover {
+            background-color: #218838; /* Darker shade on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <h2>Register</h2>
+        <form action="/register/" method="post">
+            {% csrf_token %}
+            <div class="form-input">
+                <input type="text" name="first_name" placeholder="First Name" required>
+            </div>
+            <div class="form-input">
+                <input type="text" name="last_name" placeholder="Last Name" required>
+            </div>
+            <div class="form-input">
+                <input type="email" name="email" placeholder="Email Address" required>
+            </div>
+            <div class="form-input">
+                <input type="password" name="password" placeholder="Password" required>
+            </div>
+            <div class="form-input">
+                <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+            </div>
+            <button type="submit" class="register-button">Register</button>
+        </form>
+    </div>
+</body>
+</html>

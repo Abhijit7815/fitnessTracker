@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workout Detail</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            height: 600px;
+        }
+        .workout-detail-container {
+            margin-top: 40px;
+            height: 95%;
+            width: 55%;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .workout-detail-container img {
+            width: 420px;
+            border-radius: 10px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        .workout-detail-container h2 {
+            margin: 10px 0;
+            font-size: 28px;
+            color: #000000;
+        }
+        .workout-detail-container p {
+            margin: 10px 0;
+            font-size: 18px;
+            color: #555;
+        }
+        .workout-detail-container .workout-type {
+            font-size: 20px;
+            color: #000000;
+            margin-bottom: 20px;
+        }
+        .workout-detail-container .description {
+            font-size: 16px;
+            color: #666;
+            text-align: center;
+            
+        }
+        .back-button {
+            display: inline-block;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .back-button:hover {
+            background-color: #0056b3;
+            box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="workout-detail-container">
+        <img src="{{ workout.image.url }}" alt="{{ workout.name }}">
+        <h2>Exercise Name : {{ workout.name }}</h2>
+        <p class="workout-type">Exercise Type : {{ workout.workout_type }}</p>
+        <p class="description">{{ workout.description }}</p>
+        <a href="{% url 'workout_view' %}" class="back-button">Back to Workouts</a>
+    </div>
+</body>
+</html>
